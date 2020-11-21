@@ -38,7 +38,7 @@ sudo -- bash -c 'echo "sol ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 
 # Install solana release as the sol user
 sudo --login -u sol -- bash -c "
-  curl -sSf https://raw.githubusercontent.com/solana-labs/solana/v1.0.0/install/solana-install-init.sh | sh -s 1.3.19"
+  curl -sSf https://raw.githubusercontent.com/solana-labs/solana/v1.0.0/install/solana-install-init.sh | sh -s $SOLANA_VERSION
 
 sudo --login -u sol -- bash -c "
   echo ~/bin/print-keys.sh >> ~/.profile;
@@ -47,17 +47,6 @@ sudo --login -u sol -- bash -c "
   chmod 0700 ~/.ssh;
 echo 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC9WOZMN0zQieAQDKmfl7jVjPhU8X+5vBVwdFRRav8Gm mbroeken-key' >> ~/.ssh/authorized_keys;
 "
-
-sudo su - sol
-
-# get scripts
-git clone https://github.com/solana-labs/cluster.git
-cd cluster
-mv bin ../
-cd ..
-rm -rf cluster
-
-ln -s /etc/systemd/system/solana.service .
 
 # Put `syslog` user in the `tty` group
 # This prevents log spam due to rsyslogd not having access to /etc/console
